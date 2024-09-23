@@ -9,27 +9,21 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await ReviewImages.bulkCreate([
+    await queryInterface.bulkInsert('review_images', [
       {
-        reviewId: '12',
-        url: 'google.com'
+        url: 'http://example.com/image1.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
-        reviewId: '123',
-        url: 'bing.com'
-      },
-      {
-        reviewId: '1234',
-        url: 'youtube.com'
+        url: 'http://example.com/image2.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], { validate: true });
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'ReviewImages';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      reviewId: { [Op.in]: ['12', '123', '1234'] }
-    }, {});
+    await queryInterface.bulkDelete('review_images', null, {});
   }
 };
