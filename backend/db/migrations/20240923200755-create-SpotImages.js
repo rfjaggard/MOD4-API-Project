@@ -11,7 +11,7 @@ module.exports = {
     await queryInterface.createTable('SpotImages', {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        //autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
+        //autoIncrement: true,
       },
       url: {
         type: Sequelize.STRING,

@@ -11,15 +11,16 @@ module.exports = {
     await queryInterface.createTable('ReviewImages', {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        //autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       reviewId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
+        //autoIncrement: true,
+        references: { model: 'Reviews', key: 'id' }
+
       },
       url: {
         type: Sequelize.STRING,
