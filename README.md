@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-![airbnb-database-schema]
+![![alt text](image.png)]
 
 [database-schema]: .images/airbnb-db-schema.png
 [db-diagram-info]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/airbnb-db-diagram-info.txt
