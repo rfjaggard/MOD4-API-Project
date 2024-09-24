@@ -6,70 +6,51 @@ if (process.env.NODE_ENV === 'production') {
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Spots', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+  up: async (queryInterface, Sequelize) => {
+    return queryInterface.bulkInsert('Spots', [
+      {
+        "ownerId": 1,
+        "address": "180 Bro Ave",
+        "city": "Lakeside",
+        "state": "California",
+        "country": "United States",
+        "lat": 88.5575,
+        "lng": -122.1809,
+        "name": "Name0",
+        "description": "desc0",
+        "price": 189
       },
-      ownerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'Users', key: 'id' }
-      },
-      address: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      city: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      state: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      country: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      lat: {
-        type: Sequelize.DECIMAL(10, 7),
-        allowNull: false
-      },
-      lng: {
-        type: Sequelize.DECIMAL(10, 7),
-        allowNull: false
-      },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
-      price: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: false
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }
-    }, options);
+          {
+            "ownerId": 2,
+            "address": "181 Homie St",
+            "city": "Rievrside",
+            "state": "Texas",
+            "country": "United States",
+            "lat": 20.0019,
+            "lng": -112.4730,
+            "name": "Name1",
+            "description": "desc1",
+            "price": 420
+          },
+          {
+            "ownerId": 3,
+            "address": "456 Elmo St",
+            "city": "Lake Hamilton",
+            "state": "Arkansas",
+            "country": "United States",
+            "lat": 11.7645,
+            "lng": 25.4730,
+            "name": "Name2",
+            "description": "desc2",
+            "price": 471
+          },
+    ], {});
   },
 
-  async down(queryInterface, Sequelize) {
-    options.tableName = "Spots";
-    await queryInterface.dropTable(options);
+  down: async (queryInterface, Sequelize) => {
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete('Spots', {
+      address: { [Op.in]: ['180 Bro Ave', '181 Homie St', '456 Elmo St'] }
+    }, {});
   }
 };
