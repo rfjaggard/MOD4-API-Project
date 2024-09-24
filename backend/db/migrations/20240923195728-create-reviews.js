@@ -17,21 +17,21 @@ module.exports = {
       },
       spotId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'Spots', key: 'id' }
+        // allowNull: false,
+        // references: { model: 'Spots', key: 'id' }
       },
       userId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'Users', key: 'id' }
+        // allowNull: false,
+        // references: { model: 'Users', key: 'id' }
       },
       review: {
         type: Sequelize.STRING,
-        allowNull: false
+        // allowNull: false
       },
       stars: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        // allowNull: false
       },
       createdAt: {
         allowNull: false,
