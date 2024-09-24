@@ -1,6 +1,4 @@
 'use strict';
-const { ReviewImages } = require('../models');
-//const bcrypt = require("bcryptjs");
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -9,21 +7,39 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('review_images', [
-      {
-        url: 'http://example.com/image1.jpg',
-        createdAt: new Date(),
-        updatedAt: new Date()
+    await queryInterface.createTable('ReviewImages', {
+      id: {
+        allowNull: false,
+        //autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
-      {
-        url: 'http://example.com/image2.jpg',
-        createdAt: new Date(),
-        updatedAt: new Date()
+      reviewId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        //autoIncrement: true,
+        references: { model: 'Reviews', key: 'id' }
+
+      },
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    ], { validate: true });
+    }, options);
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('review_images', null, {});
+    options.tableName = "ReviewImages";
+    await queryInterface.dropTable(options);
   }
 };

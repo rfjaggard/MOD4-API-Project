@@ -1,5 +1,5 @@
 'use strict';
-const { SpotImages } = require('../models');
+//const { SpotImages } = require('../models');
 
 let options = {};
 if (process.env.NODE_ENV === 'production') {
@@ -8,27 +8,42 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await SpotImages.bulkCreate([
-      {
-        spotId: '12',
-        url: 'google.com'
+    await queryInterface.createTable('SpotImages', {
+      id: {
+        allowNull: false,
+        //autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
-      {
-        spotId: '123',
-        url: 'bing.com'
+      spotId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        //autoIncrement: true,
       },
-      {
-        spotId: '1234',
-        url: 'youtube.com'
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      preview: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    ], { validate: true });
+    }, options);
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = 'SpotImages';
-    const Op = Sequelize.Op;
-    return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: ['12', '123', '1234'] }
-    }, {});
+    options.tableName = "SpotImages";
+    return queryInterface.dropTable(options);
   }
 };
