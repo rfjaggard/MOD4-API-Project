@@ -1,9 +1,9 @@
 'use strict';
 
-let options = {};
-if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.SCHEMA;  // define your schema in options object
-}
+// let options = {};
+// if (process.env.NODE_ENV === 'production') {
+//   options.schema = process.env.SCHEMA;  // define your schema in options object
+// }
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -11,39 +11,45 @@ module.exports = {
     await queryInterface.createTable('SpotImages', {
       id: {
         allowNull: false,
-        //autoIncrement: true,
+        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       spotId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        //autoIncrement: true,
+        type: Sequelize.INTEGER
       },
       url: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.TEXT
       },
       preview: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    }, options);
+    });
+
+    await queryInterface.addIndex(
+      'SpotImages',
+      ['spotId', 'preview'],
+      {
+        name: 'at-most-one-preview-per-spot',
+        where: { preview: true },
+        unique: true
+      });
   },
 
   async down (queryInterface, Sequelize) {
-    options.tableName = "SpotImages";
-    return queryInterface.dropTable(options);
+    await queryInterface.dropTable('SpotImages');
+
+    await queryInterface.removeIndex('SpotImages', 'at-most-one-preview-per-spot')
   }
 };

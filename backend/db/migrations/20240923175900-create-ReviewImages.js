@@ -11,32 +11,27 @@ module.exports = {
     await queryInterface.createTable('ReviewImages', {
       id: {
         allowNull: false,
-        //autoIncrement: true,
+        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       reviewId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        //autoIncrement: true,
-        references: { model: 'Reviews', key: 'id' }
-
+        type: Sequelize.INTEGER
       },
       url: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    }, options);
+    });
   },
 
   async down (queryInterface, Sequelize) {
