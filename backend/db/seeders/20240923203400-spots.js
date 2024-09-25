@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Spots', [
+    await queryInterface.bulkInsert('Spots', [
       {
         "ownerId": 1,
         "address": "180 Bro Ave",
@@ -18,7 +18,9 @@ module.exports = {
         "lng": -122.1809,
         "name": "Name0",
         "description": "desc0",
-        "price": 189
+        "price": 189,
+        "createdAt": new Date(),
+        "updatedAt": new Date()
       },
           {
             "ownerId": 2,
@@ -30,7 +32,9 @@ module.exports = {
             "lng": -112.4730,
             "name": "Name1",
             "description": "desc1",
-            "price": 420
+            "price": 420,
+            "createdAt": new Date(),
+            "updatedAt": new Date()
           },
           {
             "ownerId": 3,
@@ -42,15 +46,17 @@ module.exports = {
             "lng": 25.4730,
             "name": "Name2",
             "description": "desc2",
-            "price": 471
+            "price": 471,
+            "createdAt": new Date(),
+            "updatedAt": new Date()
           },
-    ], {});
+    ], options);
   },
 
   down: async (queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete('Spots', {
       address: { [Op.in]: ['180 Bro Ave', '181 Homie St', '456 Elmo St'] }
-    }, {});
+    }, options);
   }
 };

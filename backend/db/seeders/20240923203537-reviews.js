@@ -1,14 +1,14 @@
 'use strict';
 
-/*let options = {};
+let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;
-}*/
+}
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Reviews', [
+    await queryInterface.bulkInsert('Reviews', [
       {
         userId: 1,
         spotId: 1,
@@ -81,13 +81,13 @@ module.exports = {
         review: "We enjoyed this gorgeous spot. Can't wait to visit again in the summer.",
         stars: 5.0
       },
-    ], {})
+    ], options)
   },
 
   down: async (queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete('Reviews', {
       review: { [Op.in]: ["Bad spot!", "Good spot!"] }
-    }, {});
+    }, options);
   }
 };
