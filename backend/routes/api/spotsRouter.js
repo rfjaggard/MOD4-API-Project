@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Spot, SpotImage } = require('../../../db/models');
+const { Spot, SpotImage } = require('../../db/models');
 
 // GET /spots
 router.get('/api/spots', async (req, res) => {
@@ -59,4 +59,46 @@ router.post('/api/spots', async (req, res) => {
       });
     }
 });
+
+// Edit a spot
+router.put('/api/spots/:spotId', requireAuth, async (req, res) => {
+  try {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+    if (spot.ownerId !== req.user.id) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    await spot.update(req.body);
+    res.status(200).json(spot);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({
+      message: 'Bad Request',
+      errors: err.errors,
+    });
+  }
+});
+
+// Delete a spot
+router.delete('/api/spots/:spotId', requireAuth, async (req, res) => {
+  try {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if(!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found"})
+    }
+    if (spot.ownerId!== req.user.id) {
+      return res.status(403).json({ message: 'Forbidden' });
+    }
+
+    await spot.destroy();
+    res.status(200).json({ message: "Successfully deleted"})
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
