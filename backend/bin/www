@@ -1,24 +1,35 @@
 #!/usr/bin/env node
 // backend/bin/www
 
-// Import environment variables
 require('dotenv').config();
 
 const { port } = require('../config');
-
 const app = require('../app');
 const db = require('../db/models');
 
-// Check the database connection before starting the app
+console.log('Starting server...');
+
 db.sequelize
   .authenticate()
   .then(() => {
-    ('Database connection success! Sequelize is ready to use...');
-
-    // Start listening for connections
-    app.listen(port, () => (`Listening on port ${port}...`));
+    console.log('Database connection success! Sequelize is ready to use...');
+    return new Promise((resolve, reject) => {
+      const server = app.listen(port, () => {
+        console.log(`Express server listening on port ${port}`);
+        resolve(server);
+      });
+      server.on('error', reject);
+    });
+  })
+  .then(() => {
+    console.log('Server started successfully');
   })
   .catch((err) => {
-    ('Database connection failure.');
+    console.log('Error during startup:');
     console.error(err);
   });
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+  
+});

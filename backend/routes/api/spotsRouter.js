@@ -3,7 +3,7 @@ const router = express.Router();
 const { Spot, SpotImage } = require('../../db/models');
 
 // GET /spots
-router.get('/api/spots', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const spots = await Spot.findAll();
       res.status(200).json({ Spots: spots });
