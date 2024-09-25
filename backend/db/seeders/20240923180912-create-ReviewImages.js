@@ -16,13 +16,13 @@ module.exports = {
         reviewId: 2,
         url: "image-for-review-2"
       }
-    ], {});
+    ], options);
   },
 
   down: async (queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete('ReviewImages', {
+    await queryInterface.bulkDelete('ReviewImages', {
       reviewId: { [Op.in]: [1, 2] }
-    }, {});
+    }, options);
   }
 };

@@ -119,13 +119,13 @@ module.exports = {
         url: "/images/18_0.webp",
         preview: true
       },
-    ], {});
+    ], options);
   },
 
   down: async (queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete('SpotImages', {
+    await queryInterface.bulkDelete('SpotImages', {
       spotId: { [Op.in]: [1, 2, 3] }
-    }, {});
+    }, options);
   }
 };

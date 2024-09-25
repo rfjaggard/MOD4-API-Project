@@ -33,13 +33,13 @@ module.exports = {
         startDate: "12/20/25",
         endDate: "12/26/25",
       }
-    ], {});
+    ], options);
   },
 
   down: async (queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete('Bookings', {
+    await queryInterface.bulkDelete('Bookings', {
       spotId: { [Op.in]: [1, 2] }
-    }, {});
+    }, options);
   }
 };
