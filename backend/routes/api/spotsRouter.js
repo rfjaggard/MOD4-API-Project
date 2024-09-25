@@ -1,25 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const { Spot } = require('../../db/models/spot');
-const { SpotImage } = require('../../db/models/SpotImages');
+const { Spot } = require('../../db/models/spot.js');
+const { SpotImage } = require('../../db/models/SpotImages.js');
+models  = require('../../db/models');
 
-// Middleware function to log request details
-const logRequestDetails = (req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-};
+// // Middleware function to log request details
+// const logRequestDetails = (req, res, next) => {
+//   console.log(`${req.method} ${req.url}`);
+//   next();
+// };
 
-// Apply the middleware to the spotsRouter
-router.use(logRequestDetails);
+// // Apply the middleware to the spotsRouter
+// router.use(logRequestDetails);
 
 // GET /spots
 router.get('/spots', async (req, res) => {
     try {
-      const spots = await Spot.findAll();
+      const spots = await models.Spot.findAll();
       res.status(200).json({ Spots: spots });
-    } catch (err) {
+    } 
+    catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: 'Internal server error' 
+
+      });
     }
   });
 // GET all spots owned by Current User
