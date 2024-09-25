@@ -1,9 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const { Spot, SpotImage } = require('../../db/models');
+const { Spot } = require('../../db/models/spot');
+const { SpotImage } = require('../../db/models/SpotImages');
+
+// Middleware function to log request details
+const logRequestDetails = (req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+};
+
+// Apply the middleware to the spotsRouter
+router.use(logRequestDetails);
 
 // GET /spots
-router.get('/', async (req, res) => {
+router.get('/spots', async (req, res) => {
     try {
       const spots = await Spot.findAll();
       res.status(200).json({ Spots: spots });
@@ -61,7 +71,7 @@ router.post('/api/spots', async (req, res) => {
 });
 
 // Edit a spot
-router.put('/api/spots/:spotId', requireAuth, async (req, res) => {
+router.put('/api/spots/:spotId', /*requireAuth,*/ async (req, res) => {
   try {
     const spot = await Spot.findByPk(req.params.spotId);
     if (!spot) {
@@ -83,7 +93,7 @@ router.put('/api/spots/:spotId', requireAuth, async (req, res) => {
 });
 
 // Delete a spot
-router.delete('/api/spots/:spotId', requireAuth, async (req, res) => {
+router.delete('/api/spots/:spotId', /*requireAuth,*/ async (req, res) => {
   try {
     const spot = await Spot.findByPk(req.params.spotId);
     if(!spot) {
