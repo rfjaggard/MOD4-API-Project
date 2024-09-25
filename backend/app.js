@@ -18,9 +18,9 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
-const spotsRouter = require('./routes/api/spotsRouter');
+// const spotsRouter = require('./routes/api/spotsRouter');
 // app.use('../api/spotsRouter');
-app.use('/api', spotsRouter);
+// app.use('/api', spotsRouter);
 // Enable cors only in development
 if (!isProduction) {
   app.use(cors());

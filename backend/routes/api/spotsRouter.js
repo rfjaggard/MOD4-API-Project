@@ -1,45 +1,53 @@
 const express = require('express');
 const router = express.Router();
-const { Spot } = require('../../db/models/spot.js');
+// console.log("before import");
+const { Spot } = require('../../db/models');
+// console.log("after import, Spot:", Spot);
 const { SpotImage } = require('../../db/models/SpotImages.js');
 models  = require('../../db/models');
 
-// // Middleware function to log request details
+// Middleware function to log request details
 // const logRequestDetails = (req, res, next) => {
 //   console.log(`${req.method} ${req.url}`);
 //   next();
 // };
 
-// // Apply the middleware to the spotsRouter
+// Apply the middleware to the spotsRouter
 // router.use(logRequestDetails);
 
 // GET /spots
-router.get('/spots', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const spots = await models.Spot.findAll();
       res.status(200).json({ Spots: spots });
-    } 
+    }
     catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Internal server error' 
+      res.status(500).json({ message: 'Internal server error'
 
       });
     }
   });
 // GET all spots owned by Current User
-router.get('/api/spots/current', async (req, res) => {
+router.get('/current', async (req, res) => {
     try {
-      const spots = await Spot.findAll({ where: { ownerId: req.user.id } });
+      const { ownerId } = req.query;
+      if (!ownerId) {
+        return res.status(400).json({ message: "ownerId is required" });
+      }
+
+      const spots = await Spot.findAll({ where: { ownerId: parseInt(ownerId, 10) } });
       res.status(200).json({ Spots: spots });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Internal server error' });
     }
+
   });
 
 
 // Get details of a spot from an id
-router.get('/api/spots/:spotId', async (req, res) => {
+router.get('/:spotId', async (req, res) => {
     try {
       const spot = await Spot.findByPk(req.params.spotId, {
         include: [
@@ -58,7 +66,7 @@ router.get('/api/spots/:spotId', async (req, res) => {
 });
 
 // Create a spot
-router.post('/api/spots', async (req, res) => {
+router.post('/spots', async (req, res) => {
     try {
       const newSpot = await Spot.create({
         ...req.body,
@@ -75,7 +83,7 @@ router.post('/api/spots', async (req, res) => {
 });
 
 // Edit a spot
-router.put('/api/spots/:spotId', /*requireAuth,*/ async (req, res) => {
+router.put('/:spotId', /*requireAuth,*/ async (req, res) => {
   try {
     const spot = await Spot.findByPk(req.params.spotId);
     if (!spot) {
@@ -97,7 +105,7 @@ router.put('/api/spots/:spotId', /*requireAuth,*/ async (req, res) => {
 });
 
 // Delete a spot
-router.delete('/api/spots/:spotId', /*requireAuth,*/ async (req, res) => {
+router.delete('/:spotId', /*requireAuth,*/ async (req, res) => {
   try {
     const spot = await Spot.findByPk(req.params.spotId);
     if(!spot) {
