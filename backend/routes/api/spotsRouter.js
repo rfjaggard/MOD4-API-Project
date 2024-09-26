@@ -5,6 +5,7 @@ const router = express.Router();
 // // console.log("after import, Spot:", Spot);
 // const { SpotImage } = require('../../db/models/SpotImages.js');
 const { Spot, Review, SpotImages, User, sequelize, ReviewImage, Booking } = require('../../db/models');
+const { requireAuth, respondWith403, respondWithSuccessfulDelete } = require('../../utils/auth');
 models  = require('../../db/models');
 
 // Middleware function to log request details
@@ -71,7 +72,7 @@ router.get('/:spotId', async (req, res) => {
 });
 
 // Create a spot
-router.post('/spots', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
       const newSpot = await Spot.create({
         ...req.body,
@@ -88,7 +89,7 @@ router.post('/spots', async (req, res) => {
 });
 
 // Edit a spot
-router.put('/:spotId', /*requireAuth,*/ async (req, res) => {
+router.put('/:spotId', requireAuth, async (req, res) => {
   try {
     const spot = await Spot.findByPk(req.params.spotId);
     if (!spot) {
@@ -110,7 +111,7 @@ router.put('/:spotId', /*requireAuth,*/ async (req, res) => {
 });
 
 // Delete a spot
-router.delete('/:spotId', /*requireAuth,*/ async (req, res) => {
+router.delete('/:spotId', requireAuth, async (req, res) => {
   try {
     const spot = await Spot.findByPk(req.params.spotId);
     if(!spot) {
