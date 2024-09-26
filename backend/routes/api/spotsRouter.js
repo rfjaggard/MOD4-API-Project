@@ -6,7 +6,7 @@ const router = express.Router();
 // const { SpotImage } = require('../../db/models/SpotImages.js');
 const { Spot, Review, SpotImages, User, sequelize, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth, respondWith403, respondWithSuccessfulDelete } = require('../../utils/auth');
-models  = require('../../db/models');
+// models  = require('../../db/models');
 
 // Middleware function to log request details
 // const logRequestDetails = (req, res, next) => {
@@ -126,6 +126,38 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// Add an image to a Spot based on Spot's id
+router.post('/:spotId/images', requireAuth, async (req, res) => {
+  try {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
+    if (spot.ownerId !== req.user.id) {
+      return res.status(403).json({ message: "Forbidden" });
+    }
+
+    const { url, preview } = req.body;
+
+    const newImage = await SpotImages.create({
+      spotId: spot.id,
+      url,
+      preview
+    });
+
+    res.status(201).json({
+      id: newImage.id,
+      url: newImage.url,
+      preview: newImage.preview
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
