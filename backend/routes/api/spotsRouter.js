@@ -132,24 +132,26 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 
 // Add an image to a Spot based on Spot's id
 router.post('/:spotId/images', requireAuth, async (req, res) => {
+  const { spotId } = req.params;
+  const { url, preview } = req.body;
   try {
-    const spot = await Spot.findByPk(req.params.spotId);
-
-    if (!spot) {
+    const existingImage = await SpotImages.findOne({ where: { spotId, preview } });
+    
+    if (existingImage) {
+      return res.status(400).json({ error: 'A spot image with the same spotId and preview already exists' });
+    }
+    
+    const newImage = await SpotImages.create({ spotId, url, preview });
+    res.status(201).json({ message: 'Spot image added successfully', data: newImage });
+    
+    if (!Spot) {
       return res.status(404).json({ message: "Spot couldn't be found" });
     }
 
-    if (spot.ownerId !== req.user.id) {
+    if (Spot.ownerId !== req.user.id) {
+      console.error(spot.ownerId !== req.user.id);
       return res.status(403).json({ message: "Forbidden" });
     }
-
-    const { url, preview } = req.body;
-
-    const newImage = await SpotImages.create({
-      spotId: spot.id,
-      url,
-      preview
-    });
 
     res.status(201).json({
       id: newImage.id,

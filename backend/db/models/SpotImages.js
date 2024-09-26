@@ -48,8 +48,8 @@ module.exports = (sequelize, DataTypes) => {
           }
         }, {
           sequelize,
-          modelName: 'SpotImages',
-          tableName: 'spot_images'
+          modelName: 'SpotImages'
+          // tableName: 'spot_images'
         });
 
         return SpotImages;
