@@ -1,15 +1,15 @@
 'use strict';
 
 const { Model, DataTypes } = require('sequelize');
+const SpotImages = require('./SpotImages');
 
 module.exports = (sequelize, DataTypes) => {
     class Spot extends Model {
         static associate(models) {
-            // will define associations here when all tables have been completed
-
+            Spot.hasMany(models.SpotImages, {foreignKey: "spotId"});
+            Spot.belongsTo(models.User, { as: 'Owner' });// will define associations here when all tables have been completed
         }
     }
-
 
     Spot.init({
         ownerId: {

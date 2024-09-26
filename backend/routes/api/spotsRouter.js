@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 // console.log("before import");
-const { Spot } = require('../../db/models');
-// console.log("after import, Spot:", Spot);
-const { SpotImage } = require('../../db/models/SpotImages.js');
+// const { Spot } = require('../../db/models');
+// // console.log("after import, Spot:", Spot);
+// const { SpotImage } = require('../../db/models/SpotImages.js');
+const { Spot, Review, SpotImages, User, sequelize, ReviewImage, Booking } = require('../../db/models');
 models  = require('../../db/models');
 
 // Middleware function to log request details
@@ -49,9 +50,13 @@ router.get('/current', async (req, res) => {
 // Get details of a spot from an id
 router.get('/:spotId', async (req, res) => {
     try {
+      // const { User } = req.query;
+      // if (!User) {
+      //   return res.status(400).json({ message: "Id is required" })
+      // }
       const spot = await Spot.findByPk(req.params.spotId, {
         include: [
-          { model: SpotImage },
+          // { model: SpotImages },
           { model: User, as: 'Owner', attributes: ['id', 'firstName', 'lastName'] },
         ],
       });
