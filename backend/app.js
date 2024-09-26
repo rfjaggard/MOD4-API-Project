@@ -18,6 +18,9 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
+const reviewRoutes = require('./routes/api/reviewsRouter');
+app.use('/api', reviewRoutes);
+
 // const spotsRouter = require('./routes/api/spotsRouter');
 // app.use('../api/spotsRouter');
 // app.use('/api', spotsRouter);

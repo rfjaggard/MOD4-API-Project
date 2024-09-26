@@ -2,7 +2,7 @@ const express = require('express');
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
 const router = express.Router();
@@ -89,5 +89,9 @@ const validateLogin = [
     }
   );
   
+  router.get('/', requireAuth, (req, res) => {
+    res.json(req.user.toSafeObject());
+});
+
 
 module.exports = router;

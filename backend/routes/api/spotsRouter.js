@@ -5,7 +5,7 @@ const router = express.Router();
 // // console.log("after import, Spot:", Spot);
 // const { SpotImage } = require('../../db/models/SpotImages.js');
 const { Spot, Review, SpotImages, User, sequelize, ReviewImage, Booking } = require('../../db/models');
-const { requireAuth, respondWith403, respondWithSuccessfulDelete } = require('../../utils/auth');
+const { requireAuth } = require('../../utils/auth');
 models  = require('../../db/models');
 
 // Middleware function to log request details
