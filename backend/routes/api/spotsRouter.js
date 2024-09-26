@@ -7,7 +7,6 @@ const router = express.Router();
 const { Spot, Review, SpotImages, User, sequelize, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth, respondWith403, respondWithSuccessfulDelete } = require('../../utils/auth');
 // models  = require('../../db/models');
-const { requireAuth } = require('../../utils/auth');
 models  = require('../../db/models');
 
 // Middleware function to log request details
@@ -35,12 +34,12 @@ router.get('/', async (req, res) => {
 // GET all spots owned by Current User
 router.get('/current', async (req, res) => {
     try {
-      const { ownerId } = req.query;
-      if (!ownerId) {
-        return res.status(400).json({ message: "ownerId is required" });
-      }
+      // const { ownerId } = req.query;
+      // if (!ownerId) {
+      //   return res.status(400).json({ message: "ownerId is required" });
+      // }
 
-      const spots = await Spot.findAll({ where: { ownerId: parseInt(ownerId, 10) } });
+      const spots = await models.Spot.findAll({ where: { ownerId: req.user.id } });
       res.status(200).json({ Spots: spots });
     } catch (err) {
       console.error(err);
