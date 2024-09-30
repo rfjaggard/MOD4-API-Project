@@ -44,7 +44,7 @@ module.exports = {
       'SpotImages',
       ['spotId', 'preview'],
       {
-        name: 'at-most-one-preview-per-spot',
+        name: 'at-most-one-preview',
         where: { preview: true },
         unique: true
       });
@@ -53,7 +53,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('SpotImages');
 
-    await queryInterface.removeIndex('SpotImages')
+    await queryInterface.removeIndex('SpotImages');
   }
 };
 // , 'at-most-one-preview-per-spot'
