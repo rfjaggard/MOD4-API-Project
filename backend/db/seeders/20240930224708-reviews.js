@@ -29,36 +29,6 @@ module.exports = {
         stars: 5.0
       },
       {
-        userId: 4,
-        spotId: 1,
-        review: "Great location!",
-        stars: 5.0
-      },
-      {
-        userId: 5,
-        spotId: 1,
-        review: "The views were beautiful.",
-        stars: 5.0
-      },
-      {
-        userId: 6,
-        spotId: 1,
-        review: "We absolutely love the view.",
-        stars: 5.0
-      },
-      {
-        userId: 7,
-        spotId: 1,
-        review: "We really enjoyed staying here! Can't wait to come back!",
-        stars: 5.0
-      },
-      {
-        userId: 8,
-        spotId: 1,
-        review: "This place is amazing!! Can not wait to return!",
-        stars: 4
-      },
-      {
         userId: 1,
         spotId: 2,
         review: "The property was beautiful.",
