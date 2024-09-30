@@ -136,14 +136,14 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
   const { url, preview } = req.body;
   try {
     const existingImage = await SpotImages.findOne({ where: { spotId, preview } });
-    
+
     if (existingImage) {
       return res.status(400).json({ error: 'A spot image with the same spotId and preview already exists' });
     }
-    
+
     const newImage = await SpotImages.create({ spotId, url, preview });
     res.status(201).json({ message: 'Spot image added successfully', data: newImage });
-    
+
     if (!Spot) {
       return res.status(404).json({ message: "Spot couldn't be found" });
     }

@@ -25,7 +25,7 @@ router.get('/spots/:spotId/reviews', async (req, res) => {
       res.status(500).json({ error: 'Failed to fetch reviews' });
     }
   });
-  
+
   // Create a review for a spot based on the spot id
   router.post('/spots/:spotId/reviews', async (req, res) => {
     try {
@@ -37,27 +37,27 @@ router.get('/spots/:spotId/reviews', async (req, res) => {
       res.status(500).json({ error: 'Failed to create review' });
     }
   });
-  
+
   // Add an image to a review based on the review's id
-  router.post('/reviews/:reviewId/images', async (req, res) => {
+  router.post('/:reviewId/images', async (req, res) => {
     try {
       const review = await Reviews.findByPk(req.params.reviewId);
       if (!review) {
         return res.status(404).json({ message: "Review couldn't be found"});
       }
-      
+
       // if (review.userId !== req.user.id) {
       //   return res.status(403).json({ message: "Forbidden" });
       // }
-      
+
       const imageCount = await ReviewImages.count({ where: { reviewId: req.params.reviewId } });
       if (imageCount >= 10) {
         return res.status(403).json({ message: "Maximum number of images for this resource was reached" });
       }
-      
+
       const { url } = req.body;
       const newImage = await ReviewImages.create({ reviewId: req.params.reviewId, url });
-  
+
       res.status(201).json({ id: newImage.id, url: newImage.url });
 
     } catch (error) {
@@ -65,9 +65,9 @@ router.get('/spots/:spotId/reviews', async (req, res) => {
       res.status(500).json({ error: 'Failed to add image to review' });
     }
   });
-  
+
   // Edit a review
-  router.put('/reviews/:reviewId', async (req, res) => {
+  router.put('/:reviewId', async (req, res) => {
     try {
       const review = await Reviews.findByPk(req.params.reviewId);
     if (!review) {
@@ -98,9 +98,9 @@ router.get('/spots/:spotId/reviews', async (req, res) => {
       res.status(500).json({ error: 'Failed to update review' });
     }
   });
-  
+
   // Delete a review
-  router.delete('/reviews/:reviewId', async (req, res) => {
+  router.delete('/:reviewId', async (req, res) => {
     try {
       const result = await Reviews.destroy({ where: { id: req.params.reviewId } });
       if (result) {

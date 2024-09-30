@@ -4,7 +4,7 @@ const { Review, ReviewImages } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 
 // Delete a Review Image
-router.delete('/review-images/:imageId', requireAuth, async (req, res) => {
+router.delete('/:imageId', requireAuth, async (req, res) => {
     try {
         const reviewImage = await ReviewImages.findByPk(req.params.imageId, {
             include: [{
