@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         imageId: {
           type: DataTypes.INTEGER,
-          // allowNull: false
+          references: { model: 'ReviewImages', key: 'id' },
+          allowNull: false
         },
           reviewId: {
             type: DataTypes.INTEGER,
