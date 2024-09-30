@@ -53,6 +53,7 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('SpotImages');
 
-    await queryInterface.removeIndex('SpotImages', 'at-most-one-preview-per-spot')
+    await queryInterface.removeIndex('SpotImages')
   }
 };
+// , 'at-most-one-preview-per-spot'
