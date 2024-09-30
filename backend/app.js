@@ -21,6 +21,9 @@ app.use(express.json());
 const reviewRoutes = require('./routes/api/reviewsRouter');
 app.use('/api', reviewRoutes);
 
+const bookingsRouter = require('./routes/api/bookingsRouter');
+app.use('/bookings', bookingsRouter)
+
 // const spotsRouter = require('./routes/api/spotsRouter');
 // app.use('../api/spotsRouter');
 // app.use('/api', spotsRouter);

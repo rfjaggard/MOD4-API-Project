@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { Review, ReviewImages } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-
 // Delete a Review Image
 router.delete('/:imageId', requireAuth, async (req, res) => {
     try {
