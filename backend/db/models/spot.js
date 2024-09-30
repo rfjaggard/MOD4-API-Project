@@ -6,8 +6,8 @@ const SpotImages = require('./SpotImages');
 module.exports = (sequelize, DataTypes) => {
     class Spots extends Model {
         static associate(models) {
-            Spot.hasMany(models.SpotImages, {foreignKey: "spotId"});
-            Spot.belongsTo(models.User, { as: 'Owner' });// will define associations here when all tables have been completed
+            Spots.hasMany(models.SpotImages, {foreignKey: "spotId"});
+            Spots.belongsTo(models.User, { as: 'Owner' });// will define associations here when all tables have been completed
         }
     }
 
@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }, {
         sequelize,
-        modelName: 'Spot',
+        modelName: 'Spots',
     });
 
     return Spots;
