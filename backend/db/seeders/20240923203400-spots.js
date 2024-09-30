@@ -50,13 +50,13 @@ module.exports = {
             "createdAt": new Date(),
             "updatedAt": new Date()
           },
-    ], options);
+    ], {validate: true});
   },
 
   down: async (queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
-    await queryInterface.bulkDelete('Spots', {
+    await queryInterface.bulkDelete(options, {
       address: { [Op.in]: ['180 Bro Ave', '181 Homie St', '456 Elmo St'] }
-    }, options);
+    }, {});
   }
 };
