@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class SpotImages extends Model {
     static associate(models) {
     SpotImages.belongsTo(models.Spot, { foreignKey: "spotId"});
+    SpotImages.hasMany(models.SpotImages, {foreignKey: "imageId"});
     }
   }
 
@@ -18,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
           primaryKey: true,
           autoIncrement: true,
           allowNull: false
+        },
+        imageId: {
+          type: DataTypes.INTEGER,
+          // allowNull: false
         },
         spotId: {
             type: DataTypes.INTEGER,

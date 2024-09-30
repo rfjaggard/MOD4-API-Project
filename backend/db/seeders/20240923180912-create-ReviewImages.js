@@ -9,10 +9,12 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('ReviewImages', [
       {
+        imageId: 1,
         reviewId: 1,
         url: "image-for-review-1"
       },
       {
+        imageId: 2,
         reviewId: 2,
         url: "image-for-review-2"
       }
