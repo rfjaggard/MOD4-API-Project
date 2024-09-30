@@ -5,7 +5,7 @@ const { Model, Validator, INTEGER } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class SpotImages extends Model {
     static associate(models) {
-    SpotImages.belongsTo(models.Spots, { foreignKey: "spotId"});
+    SpotImages.belongsTo(models.Spot, { foreignKey: "spotId"});
     SpotImages.hasMany(models.SpotImages, {foreignKey: "imageId"});
     }
   }
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Spots',
+                model: 'Spot',
                 key: 'id'
             }
 

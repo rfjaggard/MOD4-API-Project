@@ -21,7 +21,7 @@ models  = require('../../db/models');
 // GET /spots
 router.get('/', async (req, res) => {
     try {
-      const spots = await models.Spots.findAll();
+      const spots = await models.Spot.findAll();
       res.status(200).json({ Spots: spots });
     }
     catch (err) {
@@ -39,7 +39,7 @@ router.get('/current', async (req, res) => {
       //   return res.status(400).json({ message: "ownerId is required" });
       // }
 
-      const spot = await models.Spots.findAll({ where: { ownerId: req.user.id } });
+      const spot = await models.Spot.findAll({ where: { ownerId: req.user.id } });
       res.status(200).json({ Spots: spot });
     } catch (err) {
       console.error(err);
@@ -56,7 +56,7 @@ router.get('/:spotId', async (req, res) => {
       // if (!User) {
       //   return res.status(400).json({ message: "Id is required" })
       // }
-      const spot = await Spots.findByPk(req.params.spotId, {
+      const spot = await models.Spot.findByPk(req.params.spotId, {
         include: [
           // { model: SpotImages },
           { model: User, as: 'Owner', attributes: ['id', 'firstName', 'lastName'] },
@@ -75,7 +75,7 @@ router.get('/:spotId', async (req, res) => {
 // Create a spot
 router.post('/', async (req, res) => {
     try {
-      const newSpot = await Spots.create({
+      const newSpot = await models.Spot.create({
         ...req.body,
         ownerId: req.user.id,
       });
@@ -92,7 +92,7 @@ router.post('/', async (req, res) => {
 // Edit a spot
 router.put('/:spotId', requireAuth, async (req, res) => {
   try {
-    const spot = await Spots.findByPk(req.params.spotId);
+    const spot = await models.Spot.findByPk(req.params.spotId);
     if (!spot) {
       return res.status(404).json({ message: "Spot couldn't be found" });
     }
@@ -114,7 +114,7 @@ router.put('/:spotId', requireAuth, async (req, res) => {
 // Delete a spot
 router.delete('/:spotId', requireAuth, async (req, res) => {
   try {
-    const spot = await Spots.findByPk(req.params.spotId);
+    const spot = await models.Spot.findByPk(req.params.spotId);
     if(!spot) {
       return res.status(404).json({ message: "Spot couldn't be found"})
     }
