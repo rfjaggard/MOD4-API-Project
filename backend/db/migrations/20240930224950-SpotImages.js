@@ -16,10 +16,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       imageId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'SpotImages', key: 'id', onDelete: 'CASCADE' }
       },
       spotId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'Spots', key: 'id', onDelete: 'CASCADE' }
       },
       url: {
         type: Sequelize.TEXT

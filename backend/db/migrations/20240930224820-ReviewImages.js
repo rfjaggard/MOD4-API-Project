@@ -17,10 +17,11 @@ module.exports = {
       },
       imageId: {
         type: Sequelize.INTEGER,
-        references: { model: 'ReviewImages', key: 'id' }
+        references: { model: 'ReviewImages', key: 'id', onDelete: 'CASCADE' }
       },
       reviewId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: { model: 'Reviews', key: 'id', onDelete: 'CASCADE' }
       },
       url: {
         type: Sequelize.TEXT
