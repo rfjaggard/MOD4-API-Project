@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Reviews', [
+    await queryInterface.bulkInsert('Reviews', options, [
       {
         userId: 1,
         spotId: 1,
