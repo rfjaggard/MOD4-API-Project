@@ -7,8 +7,9 @@ if (process.env.NODE_ENV === 'production') {
 };
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('SpotImages', options, [
+  async up (queryInterface, Sequelize) {
+    options.tableName = 'SpotImages';
+    await queryInterface.bulkInsert(options, [
       {
         imageId: 1,
         spotId: 1,
@@ -30,9 +31,10 @@ module.exports = {
     ], options);
   },
 
-  down: async (queryInterface, Sequelize) => {
+  async down (queryInterface, Sequelize) {
+    options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
-    await queryInterface.bulkDelete('SpotImages', {
+    await queryInterface.bulkDelete(options, {
       spotId: { [Op.in]: [1, 2, 3] }
     }, options);
   }
