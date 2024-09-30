@@ -40,14 +40,14 @@ module.exports = {
       }
     });
 
-    await queryInterface.addIndex(
-      'SpotImages',
-      ['spotId', 'preview'],
-      {
-        name: 'at-most-one-preview',
-        where: { preview: true },
-        unique: true
-      });
+    // await queryInterface.addIndex(
+    //   'SpotImages',
+    //   ['spotId', 'preview'],
+    //   {
+    //     name: 'at-most-one-preview',
+    //     where: { preview: true },
+    //     unique: true
+    //   });
   },
 
   async down (queryInterface, Sequelize) {
