@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { Spot, SpotImage } = require('../../db/models');
+const { Spot, SpotImages } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-
+// const models = require('../../db/models');
 // Delete a Spot Image
 router.delete('/:imageId', requireAuth, async (req, res) => {
     try {
-        const spotImage = await SpotImage.findByPk(req.params.imageId, {
+        const spotImage = await SpotImages.findByPk(req.params.imageId, {
             include: [{
                 model: Spot,
                 attributes: ['ownerId']
@@ -21,7 +21,9 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
             return res.status(403).json({ message: "Forbidden" });
         }
 
-        await spotImage.destroy();
+        await SpotImages.destroy({
+            where: {id: req.params.imageId}
+        });
         res.status(200).json({ message: "Successfully deleted" });
     } catch (err) {
         console.error(err);

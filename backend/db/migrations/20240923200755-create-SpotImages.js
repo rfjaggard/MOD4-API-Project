@@ -15,6 +15,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      imageId: {
+        type: Sequelize.INTEGER
+      },
       spotId: {
         type: Sequelize.INTEGER
       },

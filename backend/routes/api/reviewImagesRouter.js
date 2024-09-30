@@ -21,7 +21,9 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
             return res.status(403).json({ message: "Forbidden" });
         }
 
-        await reviewImage.destroy();
+        await reviewImage.destroy({
+            where: {id: req.params.imageId}
+        });
         res.status(200).json({ message: "Successfully deleted" });
     } catch (err) {
         console.error(err);
