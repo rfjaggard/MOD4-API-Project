@@ -4,14 +4,14 @@ const { Model, DataTypes } = require('sequelize');
 const SpotImages = require('./SpotImages');
 
 module.exports = (sequelize, DataTypes) => {
-    class Spot extends Model {
+    class Spots extends Model {
         static associate(models) {
             Spot.hasMany(models.SpotImages, {foreignKey: "spotId"});
             Spot.belongsTo(models.User, { as: 'Owner' });// will define associations here when all tables have been completed
         }
     }
 
-    Spot.init({
+    Spots.init({
         ownerId: {
             type:DataTypes.INTEGER,
             allowNull: false,
@@ -58,6 +58,6 @@ module.exports = (sequelize, DataTypes) => {
         modelName: 'Spot',
     });
 
-    return Spot;
+    return Spots;
 
 };
