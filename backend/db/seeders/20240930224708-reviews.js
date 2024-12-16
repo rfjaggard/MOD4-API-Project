@@ -36,6 +36,6 @@ module.exports = {
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
       review: { [Op.in]: ["Bad spot!", "Good spot!"] }
-    }, options);
+    }, {});
   }
 };

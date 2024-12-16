@@ -1,0 +1,36 @@
+.SpotDetailsHeader>h1 {
+    font-size: 25px;
+    color: #222222;
+    font-family: 'Poppins-light', sans-serif;
+}
+
+.SpotDetailsHeader {
+    margin-top: 18px;
+}
+
+.SpotsDetailsRatingLocation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    font-size: 15px;
+    padding-top: 0px;
+    margin-bottom: -10px;
+    margin-top: 0px;
+}
+
+.SpotsDetailsRatingLocation>i {
+    font-size: 13px;
+}
+
+.spotButtons {
+    display: flex;
+    gap: 10px;
+}
+
+.spotButtons>button {
+    cursor: pointer;
+    background-color: white;
+    font-weight: bold;
+    border: none;
+}
